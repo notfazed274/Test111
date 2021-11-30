@@ -1,11 +1,11 @@
 import pytest
 import selenium.webdriver
-
+from configparser import ConfigParser
 
 
 def pytest_addoption(parser):
-  parser.addoption('--browser', action='store', default='chrome',
-                    help ='setup browser: Chrome')
+    parser.addoption('--browser', action='store',default='chrome',
+                     help ='setup browser: Chrome')
 
 @pytest.fixture
 def browser(request):
@@ -13,6 +13,9 @@ def browser(request):
 
   if sel_browser == 'chrome':
     b = selenium.webdriver.Chrome()
+  elif sel_browser == 'headless':
+    opts = selenium.webdriver.ChromeOptions()
+    opts.add_argument('headless')
   else:
     raise Exception(f'Browser '+sel_browser+'  is not supported')
 
