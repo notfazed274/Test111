@@ -1,7 +1,35 @@
 import pytest
 import selenium.webdriver
-import json
 
+
+
+def pytest_addoption(parser):
+  parser.addoption('--browser', action='store', default='chrome',
+                    help ='setup browser: Chrome')
+
+@pytest.fixture
+def browser(request):
+  sel_browser = request.config.getoption("--browser")
+
+  if sel_browser == 'chrome':
+    b = selenium.webdriver.Chrome()
+  else:
+    raise Exception(f'Browser '+sel_browser+'  is not supported')
+
+  b.implicitly_wait('20')
+  yield b
+  b.quit()
+
+
+
+
+
+
+
+
+
+
+"""
 @pytest.fixture
 def config(scope='session'):
     # Read the file
@@ -34,4 +62,4 @@ def browser(config):
     yield b
     b.quit()
 
-
+"""
