@@ -16,6 +16,7 @@ def browser(request):
   elif sel_browser == 'headless':
     opts = selenium.webdriver.ChromeOptions()
     opts.add_argument('headless')
+    b = selenium.webdriver.Chrome(options=opts)
   else:
     raise Exception(f'Browser '+sel_browser+'  is not supported')
 
